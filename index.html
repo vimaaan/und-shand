@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pay Raghav (UPI)</title>
+  <title>Pay via UPI</title>
   <style>
     :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
     body{display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#f6f8fb}
@@ -24,7 +24,7 @@
     <p>Click the button below on a mobile device with UPI apps installed (Google Pay, PhonePe, BHIM, etc.).</p>
 
     <div style="margin-bottom:14px">
-      <div class="upi" id="upiId">raghavsngh18@okhdfcbank</div>
+      <div class="upi" id="upiId">8949470092@fam</div>
     </div>
 
     <button class="btn btn-primary" id="payBtn">Open in UPI app</button>
@@ -35,7 +35,7 @@
 
   <script>
     (function(){
-      const upiId = 'raghavsngh18@okhdfcbank';
+      const upiId = '8949470092@fam';
       const payBtn = document.getElementById('payBtn');
       const copyBtn = document.getElementById('copyBtn');
       const info = document.getElementById('info');
@@ -44,10 +44,7 @@
       const upiUri = 'upi://pay?pa=' + encodeURIComponent(upiId) + '&pn=' + encodeURIComponent('') + '&tn=' + encodeURIComponent('Payment') + '&cu=INR';
 
       payBtn.addEventListener('click', function(){
-        // Try opening the UPI scheme. Mobile browsers will prompt to open the installed UPI app.
         window.location.href = upiUri;
-
-        // Note: some desktop browsers ignore the upi:// scheme. In that case the user should copy the ID.
       });
 
       copyBtn.addEventListener('click', function(){

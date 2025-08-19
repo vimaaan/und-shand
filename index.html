@@ -142,7 +142,7 @@
 
   <script>
     const upiId = "raghavsngh18@okhdfcbank";
-    const recipientName = "Stray Cat Rescue";
+    const recipientName = "Raghav Singh";
     const googleScriptUrl = "https://script.google.com/macros/s/AKfycbxQedlBJ7--G_9QNr4ZUz0u-NSfTl1yCsFsP4kLHG-UV-q8gXEZSnICwRyaMz9yT8zs/exec";
 
     let selectedAmount = 0;
@@ -271,7 +271,7 @@
                 paymentUrl = `phonepe://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
                 break;
               case "gpay":
-                paymentUrl = `tez://upi/pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
+                paymentUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
                 break;
               default:
                 paymentUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;

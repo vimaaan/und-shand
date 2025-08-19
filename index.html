@@ -163,7 +163,7 @@
     // Generate dynamic QR
     function updateQR() {
       if (selectedAmount <= 0) return;
-      const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&cu=INR`;
+      const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
       qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
     }
 
@@ -228,65 +228,40 @@
       btn.addEventListener('click', async () => {
         if (!validateForm()) return;
 
-        const donorName = nameInput.value.trim().substring(0, 12);
-        const donorEmail = emailInput.value.trim();
-        const message = messageInput.value.trim().substring(0, 230);
         const txnRef = 'TXN-' + Date.now().toString().slice(-6);
+        
+        document.getElementById('txn-ref').textContent = txnRef;
+        donationForm.style.display = 'none';
+        confirmationDiv.style.display = 'block';
 
-        loadingDiv.style.display = 'flex';
+        if (!upiId || upiId.trim() === '') {
+          alert('❌ Payment configuration error: UPI ID is missing. Please contact support.');
+          return;
+        }
+
+        const app = btn.dataset.app;
+        let paymentUrl = "";
         try {
-          const response = await fetch(googleScriptUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              name: donorName, email: donorEmail, amount: selectedAmount,
-              message: message, paymentMethod: btn.dataset.app,
-              txnRef: txnRef, timestamp: new Date().toISOString()
-            })
-          });
-          const result = await response.json();
-          if (result.status === "success") {
-            document.getElementById('txn-ref').textContent = txnRef;
-            donationForm.style.display = 'none';
-            confirmationDiv.style.display = 'block';
-          } else {
-            alert("⚠️ Could not save record, but payment will still continue.");
+          switch(app) {
+            case "phonepe":
+              paymentUrl = `phonepe://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
+              break;
+            case "gpay":
+              paymentUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
+              break;
+            default:
+              paymentUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
           }
-        } catch (error) {
-          console.error('Error saving to database:', error);
-          alert("⚠️ Error saving record, but payment will still continue.");
-        } finally {
-          loadingDiv.style.display = 'none';
+          console.log('Payment URL:', paymentUrl);
+          window.location.href = paymentUrl;
 
-          if (!upiId || upiId.trim() === '') {
-            alert('❌ Payment configuration error: UPI ID is missing. Please contact support.');
-            return;
-          }
-
-          const app = btn.dataset.app;
-          let paymentUrl = "";
-          try {
-            switch(app) {
-              case "phonepe":
-                paymentUrl = `phonepe://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
-                break;
-              case "gpay":
-                paymentUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
-                break;
-              default:
-                paymentUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
-            }
-            console.log('Payment URL:', paymentUrl);
-            window.location.href = paymentUrl;
-
-            // Fallback alert
-            setTimeout(() => {
-              alert("If your UPI app didn't open, please scan the QR code below.");
-            }, 3000);
-          } catch (urlError) {
-            console.error('Error creating payment URL:', urlError);
-            alert('❌ Error creating payment link. Please try scanning the QR code instead.');
-          }
+          // Fallback alert
+          setTimeout(() => {
+            alert("If your UPI app didn't open, please scan the QR code below.");
+          }, 3000);
+        } catch (urlError) {
+          console.error('Error creating payment URL:', urlError);
+          alert('❌ Error creating payment link. Please try scanning the QR code instead.');
         }
       });
     });

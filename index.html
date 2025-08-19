@@ -163,11 +163,7 @@
     // Generate dynamic QR
     function updateQR() {
       if (selectedAmount <= 0) return;
-      const donorName = nameInput.value.trim().substring(0, 12) || "Donor";
-      const message = messageInput.value.trim().substring(0, 230) || "Donation for stray cats";
-      let note = ``;
-      
-      const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR&tn=${encodeURIComponent('Donation')}`;
+      const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
       qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
     }
 
@@ -236,8 +232,6 @@
         const donorEmail = emailInput.value.trim();
         const message = messageInput.value.trim().substring(0, 230);
         const txnRef = 'TXN-' + Date.now().toString().slice(-6);
-        let note = ``;
-        
 
         loadingDiv.style.display = 'flex';
         try {
@@ -274,13 +268,13 @@
           try {
             switch(app) {
               case "phonepe":
-                paymentUrl = `phonepe://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR&tn=${encodeURIComponent('Donation')}`;
+                paymentUrl = `phonepe://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
                 break;
               case "gpay":
-                paymentUrl = `tez://upi/pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR&tn=${encodeURIComponent('Donation')}`;
+                paymentUrl = `tez://upi/pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
                 break;
               default:
-                paymentUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR&tn=${encodeURIComponent('Donation')}`;
+                paymentUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
             }
             console.log('Payment URL:', paymentUrl);
             window.location.href = paymentUrl;
@@ -299,6 +293,3 @@
   </script>
 </body>
 </html>
-
-
-

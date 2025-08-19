@@ -24,6 +24,14 @@
     h1 {
       color: #333;
     }
+    input[type="number"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 100px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
     button {
       background-color: #4285f4;
       color: white;
@@ -37,18 +45,49 @@
     button:hover {
       background-color: #357abd;
     }
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    p.error {
+      color: red;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Make a Payment</h1>
-    <p>Click the button below to pay via Google Pay</p>
-    <button onclick="redirectToGPay()">Pay Now</button>
+    <p>Enter amount and click to pay via Google Pay</p>
+    <input type="number" id="amount" placeholder="Enter amount" min="1" step="1">
+    <br>
+    <p id="error" class="error" style="display: none;">Please enter a valid amount (minimum ₹1).</p>
+    <button id="payButton" onclick="redirectToGPay()" disabled>Pay Now</button>
   </div>
   <script>
+    const amountInput = document.getElementById('amount');
+    const payButton = document.getElementById('payButton');
+    const errorMsg = document.getElementById('error');
+
+    amountInput.addEventListener('input', () => {
+      const amount = parseFloat(amountInput.value);
+      if (amount >= 1) {
+        payButton.disabled = false;
+        errorMsg.style.display = 'none';
+      } else {
+        payButton.disabled = true;
+        errorMsg.style.display = 'block';
+      }
+    });
+
     function redirectToGPay() {
+      const amount = parseFloat(amountInput.value).toFixed(2);
+      if (amount < 1) {
+        errorMsg.style.display = 'block';
+        return;
+      }
       const upiId = "raghavsngh18@okhdfcbank";
-      const upiLink = `upi://pay?pa=${upiId}&pn=Payment&cu=INR`;
+      const upiLink = `upi://pay?pa=${upiId}&pn=Raghav%20Singh&am=${amount}&tn=Donation&cu=INR`;
       window.location.href = upiLink;
     }
   </script>

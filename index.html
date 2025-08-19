@@ -1,270 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Donate to Stray Cats</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pay Raghav (UPI)</title>
   <style>
-    :root {
-      --primary: #ff6b6b;
-      --secondary: #6c5ce7;
-      --success: #4CAF50;
-      --error: #f44336;
-      --light: #f8f9fa;
-      --dark: #343a40;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-      background-color: #f5f7fa;
-      color: #333;
-      padding: 20px;
-    }
-    .donation-container {
-      max-width: 600px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      padding: 30px;
-    }
-    h1 { color: var(--primary); margin-bottom: 10px; text-align: center; }
-    p.subtitle { text-align: center; color: #666; margin-bottom: 30px; }
-    .donation-form { margin-top: 20px; }
-    .form-group { margin-bottom: 20px; }
-    label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
-    input, textarea {
-      width: 100%; padding: 12px 15px; border: 1px solid #ddd;
-      border-radius: 8px; font-size: 16px; transition: border-color 0.3s;
-    }
-    input:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2); }
-    .amount-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 10px; }
-    .amount-btn {
-      padding: 12px; border: 2px solid #ddd; border-radius: 8px;
-      background: white; font-weight: bold; font-size: 16px; cursor: pointer;
-      transition: all 0.2s;
-    }
-    .amount-btn:hover { border-color: var(--primary); }
-    .amount-btn.selected { background: var(--primary); color: white; border-color: var(--primary); }
-    .custom-amount { grid-column: span 3; display: flex; gap: 10px; }
-    .custom-amount input { flex: 1; text-align: center; }
-    #custom-btn { padding: 0 20px; background: var(--success); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-    #custom-btn:hover { background: #3e8e41; }
-    textarea { min-height: 100px; resize: vertical; }
-    .payment-methods { margin: 30px 0; padding-top: 20px; border-top: 1px solid #eee; }
-    .payment-methods p { text-align: center; margin-bottom: 15px; font-weight: 600; color: #555; }
-    .payment-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .payment-btn {
-      padding: 12px 20px; border-radius: 8px; color: white; border: none; font-weight: bold;
-      display: flex; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s, opacity 0.2s;
-    }
-    .payment-btn:hover { transform: translateY(-2px); opacity: 0.9; }
-    .phonepe { background: #5f27cd; }
-    .gpay { background: #4285F4; }
-    .upi { background: #6c5ce7; }
-    .qr-section { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; }
-    .qr-section img { width: 180px; height: 180px; border: 1px solid #eee; padding: 10px; background: white; margin: 10px 0; }
-    .qr-section strong { color: var(--primary); }
-    .confirmation { text-align: center; padding: 30px 0; display: none; }
-    .confirmation h2 { color: var(--success); margin-bottom: 15px; }
-    .loading { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1000; justify-content: center; align-items: center; }
-    .spinner { width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .char-limit { font-size: 12px; color: #666; text-align: right; margin-top: 4px; }
-    .char-limit.warning { color: var(--error); }
-    .error-alert { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 10px; border-radius: 5px; margin: 10px 0; }
+    :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#f6f8fb}
+    .card{background:#fff;padding:28px;border-radius:12px;box-shadow:0 10px 30px rgba(20,30,50,0.08);width:360px;max-width:92%}
+    h1{font-size:20px;margin:0 0 8px}
+    p{margin:0 0 16px;color:#4b5563}
+    .btn{display:inline-block;width:100%;padding:12px 14px;border-radius:10px;border:0;font-weight:600;font-size:15px;cursor:pointer}
+    .btn-primary{background:#0b66ff;color:white}
+    .btn-outline{background:transparent;border:1px solid #d1d5db;color:#111}
+    .small{font-size:13px;color:#6b7280;margin-top:12px}
+    .upi{font-family:monospace;padding:8px;background:#f3f4f6;border-radius:8px;display:inline-block}
+    .copied{color:green;margin-left:8px;font-weight:600}
   </style>
 </head>
 <body>
-  <div class="donation-container">
-    <h1>Help Stray Cats</h1>
-    <p class="subtitle">Your support makes a difference!</p>
+  <div class="card">
+    <h1>Pay via UPI / Google Pay</h1>
+    <p>Click the button below on a mobile device with UPI apps installed (Google Pay, PhonePe, BHIM, etc.).</p>
 
-    <form id="donation-form" class="donation-form">
-      <div class="form-group">
-        <label for="name">Your Name</label>
-        <input type="text" id="name" maxlength="12" required>
-        <div class="char-limit" id="name-char-limit">0/12 characters</div>
-        <div id="name-error" class="error-message" style="color:red;display:none;">Please enter your name (max 12 characters)</div>
-      </div>
-      <div class="form-group">
-        <label for="email">Email (Optional)</label>
-        <input type="email" id="email">
-        <div id="email-error" class="error-message" style="color:red;display:none;">Please enter a valid email</div>
-      </div>
-      <div class="form-group">
-        <label>Donation Amount (₹)</label>
-        <div class="amount-options">
-          <button type="button" class="amount-btn" data-amount="100">₹100</button>
-          <button type="button" class="amount-btn" data-amount="250">₹250</button>
-          <button type="button" class="amount-btn" data-amount="500">₹500</button>
-          <div class="custom-amount">
-            <input type="number" id="custom-input" placeholder="Other amount" min="1">
-            <button type="button" id="custom-btn">Custom</button>
-          </div>
-        </div>
-        <div id="amount-error" class="error-message" style="color:red;display:none;">Please select an amount</div>
-      </div>
-      <div class="form-group">
-        <label for="message">Special Instructions (Optional)</label>
-        <textarea id="message" maxlength="230"></textarea>
-        <div class="char-limit" id="message-char-limit">0/230 characters</div>
-      </div>
-      <div class="payment-methods">
-        <p>Choose payment method:</p>
-        <div class="payment-buttons">
-          <button type="button" class="payment-btn phonepe" data-app="phonepe"><i class="fab fa-product-hunt"></i> PhonePe</button>
-          <button type="button" class="payment-btn gpay" data-app="gpay">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Google_Pay_Logo.svg" alt="Google Pay" style="height:20px;"> Google Pay
-          </button>
-          <button type="button" class="payment-btn upi" data-app="upi"><i class="fas fa-mobile-alt"></i> Any UPI App</button>
-        </div>
-      </div>
-    </form>
-
-    <div class="qr-section">
-      <h3>Or scan this QR code:</h3>
-      <img id="upi-qr" src="" alt="UPI QR Code">
-      <p>UPI ID: <strong>raghavsngh18@okhdfcbank</strong></p>
+    <div style="margin-bottom:14px">
+      <div class="upi" id="upiId">raghavsngh18@okhdfcbank</div>
     </div>
 
-    <div class="confirmation" id="confirmation">
-      <h2>Thank You! ❤️</h2>
-      <p>Your donation details have been recorded.</p>
-      <p>Transaction reference: <span id="txn-ref"></span></p>
-      <p>Please complete the payment in your UPI app.</p>
-    </div>
+    <button class="btn btn-primary" id="payBtn">Open in UPI app</button>
+    <button class="btn btn-outline" id="copyBtn" style="margin-top:10px">Copy UPI ID</button>
+
+    <div class="small" id="info">If the UPI app doesn't open, copy the UPI ID above and paste it into your payment app. You can also scan a QR (ask me to add a QR on this page).</div>
   </div>
 
-  <div class="loading" id="loading"><div class="spinner"></div></div>
-
   <script>
-    const upiId = "raghavsngh18@okhdfcbank";
-    const recipientName = "Raghav Singh";
-    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbxQedlBJ7--G_9QNr4ZUz0u-NSfTl1yCsFsP4kLHG-UV-q8gXEZSnICwRyaMz9yT8zs/exec";
+    (function(){
+      const upiId = 'raghavsngh18@okhdfcbank';
+      const payBtn = document.getElementById('payBtn');
+      const copyBtn = document.getElementById('copyBtn');
+      const info = document.getElementById('info');
 
-    let selectedAmount = 0;
-    const donationForm = document.getElementById('donation-form');
-    const confirmationDiv = document.getElementById('confirmation');
-    const loadingDiv = document.getElementById('loading');
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const customInput = document.getElementById('custom-input');
-    const messageInput = document.getElementById('message');
-    const nameError = document.getElementById('name-error');
-    const emailError = document.getElementById('email-error');
-    const amountError = document.getElementById('amount-error');
-    const nameCharLimit = document.getElementById('name-char-limit');
-    const messageCharLimit = document.getElementById('message-char-limit');
-    const qrImg = document.getElementById('upi-qr');
+      // UPI deep link - no amount prefilled. You may add &am=10.00 to prefill amount.
+      const upiUri = 'upi://pay?pa=' + encodeURIComponent(upiId) + '&pn=' + encodeURIComponent('') + '&tn=' + encodeURIComponent('Payment') + '&cu=INR';
 
-    // Generate dynamic QR
-    function updateQR() {
-      if (selectedAmount <= 0) return;
-      const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
-      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
-    }
+      payBtn.addEventListener('click', function(){
+        // Try opening the UPI scheme. Mobile browsers will prompt to open the installed UPI app.
+        window.location.href = upiUri;
 
-    // Character limit counters
-    nameInput.addEventListener('input', () => {
-      const length = nameInput.value.length;
-      nameCharLimit.textContent = `${length}/12 characters`;
-      if (length >= 10) nameCharLimit.classList.add('warning');
-      else nameCharLimit.classList.remove('warning');
-      updateQR();
-    });
-
-    messageInput.addEventListener('input', () => {
-      const length = messageInput.value.length;
-      messageCharLimit.textContent = `${length}/230 characters`;
-      if (length >= 200) messageCharLimit.classList.add('warning');
-      else messageCharLimit.classList.remove('warning');
-      updateQR();
-    });
-
-    document.querySelectorAll('.amount-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        selectedAmount = parseInt(btn.dataset.amount);
-        document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
-        customInput.value = '';
-        amountError.style.display = 'none';
-        updateQR();
+        // Note: some desktop browsers ignore the upi:// scheme. In that case the user should copy the ID.
       });
-    });
 
-    document.getElementById('custom-btn').addEventListener('click', () => {
-      const customAmount = parseInt(customInput.value);
-      if (customAmount && customAmount > 0) {
-        selectedAmount = customAmount;
-        document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
-        amountError.style.display = 'none';
-        updateQR();
-      } else {
-        amountError.style.display = 'block';
-        amountError.textContent = "Please enter a valid amount";
-      }
-    });
-
-    function validateForm() {
-      let isValid = true;
-      if (!nameInput.value.trim() || nameInput.value.trim().length > 12) {
-        nameError.style.display = 'block'; isValid = false;
-      } else { nameError.style.display = 'none'; }
-
-      if (emailInput.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
-        emailError.style.display = 'block'; isValid = false;
-      } else { emailError.style.display = 'none'; }
-
-      if (selectedAmount <= 0) {
-        amountError.style.display = 'block'; amountError.textContent = "Please select an amount"; isValid = false;
-      } else { amountError.style.display = 'none'; }
-      return isValid;
-    }
-
-    document.querySelectorAll('.payment-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        if (!validateForm()) return;
-
-        const txnRef = 'TXN-' + Date.now().toString().slice(-6);
-        
-        document.getElementById('txn-ref').textContent = txnRef;
-        donationForm.style.display = 'none';
-        confirmationDiv.style.display = 'block';
-
-        if (!upiId || upiId.trim() === '') {
-          alert('❌ Payment configuration error: UPI ID is missing. Please contact support.');
-          return;
-        }
-
-        const app = btn.dataset.app;
-        let paymentUrl = "";
-        try {
-          switch(app) {
-            case "phonepe":
-              paymentUrl = `phonepe://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
-              break;
-            case "gpay":
-              paymentUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
-              break;
-            default:
-              paymentUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR`;
-          }
-          console.log('Payment URL:', paymentUrl);
-          window.location.href = paymentUrl;
-
-          // Fallback alert
-          setTimeout(() => {
-            alert("If your UPI app didn't open, please scan the QR code below.");
-          }, 3000);
-        } catch (urlError) {
-          console.error('Error creating payment URL:', urlError);
-          alert('❌ Error creating payment link. Please try scanning the QR code instead.');
-        }
+      copyBtn.addEventListener('click', function(){
+        navigator.clipboard.writeText(upiId).then(function(){
+          copyBtn.textContent = 'Copied ✓';
+          setTimeout(()=> copyBtn.textContent = 'Copy UPI ID', 2000);
+        }).catch(function(){
+          info.textContent = 'Unable to copy automatically — please select and copy the UPI ID manually.';
+        });
       });
-    });
+
+    })();
   </script>
 </body>
 </html>

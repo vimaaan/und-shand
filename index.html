@@ -74,6 +74,7 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .char-limit { font-size: 12px; color: #666; text-align: right; margin-top: 4px; }
         .char-limit.warning { color: var(--error); }
+        .error-alert { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 10px; border-radius: 5px; margin: 10px 0; }
     </style>
 </head>
 <body>
@@ -124,7 +125,7 @@
         <div class="qr-section">
             <h3>Or scan this QR code:</h3>
             <img src="upi-qr.png" alt="UPI QR Code">
-            <p>UPI ID: <strong>acquiredom@okhdfcbank</strong></p>
+            <p>UPI ID: <strong>vinaayakdhiman-1@okicici</strong></p>
         </div>
 
         <div class="confirmation" id="confirmation">
@@ -138,6 +139,7 @@
     <div class="loading" id="loading"><div class="spinner"></div></div>
 
     <script>
+        // FIXED: Set the correct UPI ID (make sure this matches your QR code)
         const upiId = "vinaayakdhiman-1@okicici";
         const recipientName = "Stray Cat Rescue";
         const googleScriptUrl = "https://script.google.com/macros/s/AKfycbxQedlBJ7--G_9QNr4ZUz0u-NSfTl1yCsFsP4kLHG-UV-q8gXEZSnICwRyaMz9yT8zs/exec";
@@ -261,28 +263,40 @@
                         alert("⚠️ Could not save record, but payment will still continue.");
                     }
                 } catch (error) {
+                    console.error('Error saving to database:', error);
                     alert("⚠️ Error saving record, but payment will still continue.");
                 } finally {
                     loadingDiv.style.display = 'none';
-                    // open payment app with formatted transaction note
+                    
+                    // Validate UPI ID before creating payment URL
+                    if (!upiId || upiId.trim() === '') {
+                        alert('❌ Payment configuration error: UPI ID is missing. Please contact support.');
+                        return;
+                    }
+                    
+                    // Create payment URL with proper validation
                     const app = btn.dataset.app;
                     let paymentUrl = "";
-                    switch(app) {
-                        case "phonepe":
-                            paymentUrl = `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
-                            break;
-                        case "gpay":
-                            paymentUrl = `tez://upi/pay?pa=${upiId}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
-                            break;
-                        default:
-                            paymentUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
+                    
+                    try {
+                        switch(app) {
+                            case "phonepe":
+                                paymentUrl = `phonepe://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
+                                break;
+                            case "gpay":
+                                paymentUrl = `tez://upi/pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
+                                break;
+                            default:
+                                paymentUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
+                        }
+                        
+                        console.log('Payment URL:', paymentUrl);
+                        window.location.href = paymentUrl;
+                        
+                    } catch (urlError) {
+                        console.error('Error creating payment URL:', urlError);
+                        alert('❌ Error creating payment link. Please try scanning the QR code instead.');
                     }
-                    window.location.href = paymentUrl;
                 }
             });
         });
-    </script>
-</body>
-</html>
-
-

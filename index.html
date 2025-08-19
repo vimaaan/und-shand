@@ -166,7 +166,7 @@
       const donorName = nameInput.value.trim().substring(0, 12) || "Donor";
       const message = messageInput.value.trim().substring(0, 230) || "Donation for stray cats";
       let note = ``;
-      const transactionNote = note.substring(0, 80);
+      
       const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(recipientName)}&am=${selectedAmount}&cu=INR&tn=${encodeURIComponent('Donation')}`;
       qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
     }
@@ -299,5 +299,6 @@
   </script>
 </body>
 </html>
+
 
 
